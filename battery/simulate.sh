@@ -9,7 +9,7 @@ SENARIO="10  30 \
          40  10"
 
 INTERVAL=1
-SLEEPTIME=3
+SLEEPTIME=1
 VALUE1=
 VALUE2=
 
@@ -30,11 +30,11 @@ do
         fi
         #echo "INC=$INC"
         echo "SCENARIO: BATTERY $STAT: LEVEL CHANGED FROM $VALUE1 TO $VALUE2"
-        echo "  CHECK /proc/battery/battery"
+        echo "  CHECK /proc/battery_test"
         while [ "$VALUE1" -ne "$VALUE2" ]
         do
                 VALUE1=$(( $VALUE1 + $INC ))
-                echo "$VALUE1" > /home/pi/Desktop/battery/battery
+                echo "$VALUE1" > /proc/battery_test
                 sleep $SLEEPTIME
         done
 done

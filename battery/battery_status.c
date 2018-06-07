@@ -22,11 +22,11 @@ int main(int argc, char *argv[]) // argv 값을 받아 디바이스 파일의 IO
 	if (device >= 0)
 	{
 		printf("Device file Open\n\n");
-		ioctl(device, n); // argv 값을 디바이스 파일에 cmd 값으로 전달
+		int ret = ioctl(device, n); // argv 값을 디바이스 파일에 cmd 값으로 전달
 		
 		for( ; ; )
 		{
-			fp = fopen("battery","r");
+			fp = fopen("/proc/battery_test","r");
 			fscanf(fp,"%s",battery); // 파일에서 배터리값 읽기
 
 			write(device, battery, 10); // 디바이스 파일에 배터리값 기록
@@ -34,8 +34,9 @@ int main(int argc, char *argv[]) // argv 값을 받아 디바이스 파일의 IO
 
 			printf("remaining battery: %s\n", buff);
 			sig(atoi(buff)); // 배터리값을 기준으로 모드 설정
-			sleep(3);
+			sleep(1);
 		}
+		
 	}
 	else
 		perror("Device file open fail");
